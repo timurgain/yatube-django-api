@@ -52,7 +52,8 @@ class Group(models.Model):
         unique=True,
     )
     description = models.TextField(
-        verbose_name='Описание'
+        verbose_name='Описание',
+        blank=True,
     )
 
     class Meta:
