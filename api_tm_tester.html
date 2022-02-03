@@ -1,0 +1,96 @@
+tm - 2
+Authorization: Token 
+"refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0Mzk2ODE5MywianRpIjoiYTdiOWQ4ZWY3MmEzNGEwNTk3YjczYmRjMzQwNTY5NDgiLCJ1c2VyX2lkIjoxfQ.rOUaMcL9wM9wEPtrXG1JVrqgtsiib5li1hJCKM8Yb-I",
+"access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzOTY4MTkzLCJqdGkiOiJmNzI5MjU0OTIwNzQ0YTE0YjUzMWQ5ZmIyNDE2ZWNlNSIsInVzZXJfaWQiOjF9.256lE_e9Cef_lYMBbKxZN2RSJQ_O3AJRgbz9ctwGPYU"
+writer - 3
+Authorization: Token 
+
+### get JWT token for the superuser 1
+
+POST http://127.0.0.1:8000/api/v1/jwt/create/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "tm",
+    "password": "super1super1"
+}
+
+### --- model Group
+
+GET http://127.0.0.1:8000/api/v1/groups/ HTTP/1.1
+Content-Type: application/json
+
+###
+
+POST http://127.0.0.1:8000/api/v1/groups/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzOTY4MTkzLCJqdGkiOiJmNzI5MjU0OTIwNzQ0YTE0YjUzMWQ5ZmIyNDE2ZWNlNSIsInVzZXJfaWQiOjF9.256lE_e9Cef_lYMBbKxZN2RSJQ_O3AJRgbz9ctwGPYU
+
+{
+    "title": "Философия",
+    "slug": "filosophy",
+    "description": "Статьи про философию"
+}
+
+### --- model Post
+
+GET http://127.0.0.1:8000/api/v1/posts/1/ HTTP/1.1
+Content-Type: application/json
+
+###
+
+POST http://127.0.0.1:8000/api/v1/posts/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzOTY4MTkzLCJqdGkiOiJmNzI5MjU0OTIwNzQ0YTE0YjUzMWQ5ZmIyNDE2ZWNlNSIsInVzZXJfaWQiOjF9.256lE_e9Cef_lYMBbKxZN2RSJQ_O3AJRgbz9ctwGPYU
+
+{
+    "text": "Пост авторизованного",
+    "group": 1
+}
+
+###
+
+PUT http://127.0.0.1:8000/api/v1/posts/3/ HTTP/1.1
+Content-Type: application/json
+Authorization: Token b960268e2e3bedfad919026bd916974c5e236e81
+
+{
+    "text": "Девятая Правка пустого текста, другим юзером",
+    "group": 1
+}
+
+###
+
+GET http://127.0.0.1:8000/api/v1/posts/3/ HTTP/1.1
+Content-Type: application/json
+Authorization: Token b960268e2e3bedfad919026bd916974c5e236e81
+
+###
+
+DELETE http://127.0.0.1:8000/api/v1/posts/6/ HTTP/1.1
+Content-Type: application/json
+Authorization: Token fe0e3cbddd2e369a96d0b25dceb5c6968f0f6cbb
+
+### --- Model Comment
+
+GET http://127.0.0.1:8000/api/v1/posts/2/comments/ HTTP/1.1
+Content-Type: application/json
+Authorization: Token b960268e2e3bedfad919026bd916974c5e236e81
+
+###
+
+POST http://127.0.0.1:8000/api/v1/posts/2/comments/ HTTP/1.1
+Content-Type: application/json
+Authorization: Token b960268e2e3bedfad919026bd916974c5e236e81
+
+{
+    "text": "Комментарий StringRelatedField"
+}
+
+### --- Model Group
+
+GET http://127.0.0.1:8000/api/v1/groups/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Token b960268e2e3bedfad919026bd916974c5e236e81
+
+###

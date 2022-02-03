@@ -107,8 +107,8 @@ class Follow(models.Model):
         to=User,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='folloing',
-        verbose_name='Автор',
+        related_name='following',
+        verbose_name='Автор статьи',
     )
 
     class Meta:
