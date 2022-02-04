@@ -1,20 +1,20 @@
 tm - 1 "super1super1"
-"refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0Mzk2ODE5MywianRpIjoiYTdiOWQ4ZWY3MmEzNGEwNTk3YjczYmRjMzQwNTY5NDgiLCJ1c2VyX2lkIjoxfQ.rOUaMcL9wM9wEPtrXG1JVrqgtsiib5li1hJCKM8Yb-I",
-"access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzOTY4MTkzLCJqdGkiOiJmNzI5MjU0OTIwNzQ0YTE0YjUzMWQ5ZmIyNDE2ZWNlNSIsInVzZXJfaWQiOjF9.256lE_e9Cef_lYMBbKxZN2RSJQ_O3AJRgbz9ctwGPYU"
+"refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0NDA3Njc5NCwianRpIjoiM2U3NWIwY2MzODRkNGEwYmE4MDcxZmIzM2YwZDA5NTAiLCJ1c2VyX2lkIjoxfQ.vzdaUxT8OogEKCdvY57SlJHLinErnSphZSp8BJa3Kas",
+"access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ0MDc2Nzk0LCJqdGkiOiIyOGFlMDA2MmMyZjg0YmQ5OWRiODNlZTkwNzA4YTg3MyIsInVzZXJfaWQiOjF9.LUpBPwjJOkammxilr7BoiZO7gFZ-kOfPEBsdaFq-qVA"
 
 fedor - 2 "two2two2"
 "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0NDA0NTg1MCwianRpIjoiMmM5NDcyZjQzNTgyNDUyMDg5MmUxZDhkNDNiMjY1MWMiLCJ1c2VyX2lkIjoyfQ.NUYGlu58XBmerwNEBqr_DKS2OKIht8DZfcE2Lir9lQM",
 "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ0MDQ1ODUwLCJqdGkiOiJhNmExZjhjOTExZWE0Nzg0YTg2OGEzZTIyNDczZjFhYyIsInVzZXJfaWQiOjJ9.TswPvmMuA7ah6xJO4Mh9X8w8tKv2FtpoaF793ea2drE"
 
 
-### get JWT token for the superuser 1
+### get JWT token
 
 POST http://127.0.0.1:8000/api/v1/jwt/create/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "fedor",
-    "password": "two2two2"
+    "username": "teodor",
+    "password": "three3three3"
 }
 
 ### new user via JWT - fedor
@@ -27,6 +27,16 @@ Content-Type: application/json
     "password": "two2two2"
 }
 
+### new user via JWT - teodor
+
+POST http://127.0.0.1:8000/api/v1/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "teodor",
+    "password": "three3three3"
+}
+
 
 ### --- model Group
 
@@ -37,28 +47,27 @@ Content-Type: application/json
 
 POST http://127.0.0.1:8000/api/v1/groups/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzOTY4MTkzLCJqdGkiOiJmNzI5MjU0OTIwNzQ0YTE0YjUzMWQ5ZmIyNDE2ZWNlNSIsInVzZXJfaWQiOjF9.256lE_e9Cef_lYMBbKxZN2RSJQ_O3AJRgbz9ctwGPYU
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ0MDc2Nzk0LCJqdGkiOiIyOGFlMDA2MmMyZjg0YmQ5OWRiODNlZTkwNzA4YTg3MyIsInVzZXJfaWQiOjF9.LUpBPwjJOkammxilr7BoiZO7gFZ-kOfPEBsdaFq-qVA
 
 {
-    "title": "Философия",
-    "slug": "filosophy",
-    "description": "Статьи про философию"
+    "title": "Биология",
+    "slug": "biology",
+    "description": "Статьи про биологию"
 }
 
 ### --- model Post
 
-GET http://127.0.0.1:8000/api/v1/posts/1/ HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/posts/2/ HTTP/1.1
 Content-Type: application/json
 
 ###
 
 POST http://127.0.0.1:8000/api/v1/posts/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzOTY4MTkzLCJqdGkiOiJmNzI5MjU0OTIwNzQ0YTE0YjUzMWQ5ZmIyNDE2ZWNlNSIsInVzZXJfaWQiOjF9.256lE_e9Cef_lYMBbKxZN2RSJQ_O3AJRgbz9ctwGPYU
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ0MDc2Nzk0LCJqdGkiOiIyOGFlMDA2MmMyZjg0YmQ5OWRiODNlZTkwNzA4YTg3MyIsInVzZXJfaWQiOjF9.LUpBPwjJOkammxilr7BoiZO7gFZ-kOfPEBsdaFq-qVA
 
 {
-    "text": "Пост авторизованного",
-    "group": 1
+    "text": "Пост без группы"
 }
 
 ### --- Model Comment
@@ -70,17 +79,17 @@ Content-Type: application/json
 
 POST http://127.0.0.1:8000/api/v1/posts/1/comments/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzOTY4MTkzLCJqdGkiOiJmNzI5MjU0OTIwNzQ0YTE0YjUzMWQ5ZmIyNDE2ZWNlNSIsInVzZXJfaWQiOjF9.256lE_e9Cef_lYMBbKxZN2RSJQ_O3AJRgbz9ctwGPYU
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ0MDc2Nzk0LCJqdGkiOiIyOGFlMDA2MmMyZjg0YmQ5OWRiODNlZTkwNzA4YTg3MyIsInVzZXJfaWQiOjF9.LUpBPwjJOkammxilr7BoiZO7gFZ-kOfPEBsdaFq-qVA
 
 {
-    "text": "Комментарий"
+    "text": "Комментарий три"
 }
 
 ### --- Model Follow
 
 GET http://127.0.0.1:8000/api/v1/follow/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzOTY4MTkzLCJqdGkiOiJmNzI5MjU0OTIwNzQ0YTE0YjUzMWQ5ZmIyNDE2ZWNlNSIsInVzZXJfaWQiOjF9.256lE_e9Cef_lYMBbKxZN2RSJQ_O3AJRgbz9ctwGPYU
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ0MDc2Nzk0LCJqdGkiOiIyOGFlMDA2MmMyZjg0YmQ5OWRiODNlZTkwNzA4YTg3MyIsInVzZXJfaWQiOjF9.LUpBPwjJOkammxilr7BoiZO7gFZ-kOfPEBsdaFq-qVA
 
 ###
 
@@ -89,7 +98,7 @@ Content-Type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ0MDQ1ODUwLCJqdGkiOiJhNmExZjhjOTExZWE0Nzg0YTg2OGEzZTIyNDczZjFhYyIsInVzZXJfaWQiOjJ9.TswPvmMuA7ah6xJO4Mh9X8w8tKv2FtpoaF793ea2drE
 
 {
-    "following": "fedor"
+    "following": "teodor"
 }
 
 ###

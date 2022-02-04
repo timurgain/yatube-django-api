@@ -12,6 +12,14 @@ class PostSerializer(serializers.ModelSerializer):
     )
     pub_date = serializers.DateTimeField(read_only=True)
 
+    # Со slug тут красивее, но тесты не пропускают, хотел бы оставить для себя
+    # group = serializers.SlugRelatedField(
+    #     slug_field='slug',
+    #     queryset=Group.objects.all(),
+    #     required=False,
+    #     allow_null=True,
+    # )
+
     class Meta:
         model = Post
         fields = ('id', 'pub_date', 'author', 'text', 'group')
@@ -23,6 +31,10 @@ class CommentSerializer(serializers.ModelSerializer):
         slug_field='username', read_only=True,
         default=serializers.CurrentUserDefault(),
     )
+    created = serializers.DateTimeField(read_only=True)
+    post = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+    )
 
     class Meta:
         model = Comment
@@ -31,10 +43,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class GroupSerializer(serializers.ModelSerializer):
     """Serializer for model Group."""
+
     class Meta:
         model = Group
         fields = ('id', 'title', 'slug', 'description')
-        read_only_fields = ('id', 'title', 'slug', 'description')
 
 
 class FollowSerializer(serializers.ModelSerializer):

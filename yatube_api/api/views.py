@@ -47,7 +47,9 @@ class CommentViewSet(viewsets.ModelViewSet):
         return comments_queryset
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        post_id = self.kwargs.get('post_id')
+        author_id = self.request.user.id
+        serializer.save(post_id=post_id, author_id=author_id)
 
 
 class FollowViewSet(viewsets.ModelViewSet):
