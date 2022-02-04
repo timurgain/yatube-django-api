@@ -1,3 +1,4 @@
+from email.mime import base
 from django.urls import path, include
 from rest_framework import routers
 from .views import PostViewSet, GroupViewSet, CommentViewSet, FollowViewSet
@@ -12,12 +13,13 @@ router_v1.register(
     prefix=r'(?P<version>v1)/groups',
     viewset=GroupViewSet)
 router_v1.register(
-    prefix=r'(?P<version>v1)/posts/(?P<post_id>\d+)/comments/',
+    prefix=r'(?P<version>v1)/posts/(?P<post_id>\d+)/comments',
     viewset=CommentViewSet,
     basename='comments')
 router_v1.register(
     prefix=r'(?P<version>v1)/follow',
-    viewset=FollowViewSet)
+    viewset=FollowViewSet,
+    basename='follow')
 
 urlpatterns = [
     path('', include(router_v1.urls)),

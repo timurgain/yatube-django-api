@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from rest_framework.validators import UniqueTogetherValidator
 
 from posts.models import Comment, Post, Group, Follow
 
@@ -7,7 +7,9 @@ from posts.models import Comment, Post, Group, Follow
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         slug_field='username', read_only=True,
+        default=serializers.CurrentUserDefault(),
     )
+    pub_date = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Post
@@ -17,6 +19,7 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         slug_field='username', read_only=True,
+        default=serializers.CurrentUserDefault(),
     )
 
     class Meta:
@@ -33,7 +36,19 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(
+        slug_field='username', read_only=True,
+        default=serializers.CurrentUserDefault(),
+    )
 
     class Meta:
         model = Follow
-        fields = ('id', 'user', 'author',)
+        fields = ('user', 'following',)
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Follow.objects.all(),
+                fields=['user', 'following'],
+                message='You are already following that author'
+            )
+        ]
