@@ -1,12 +1,12 @@
-from rest_framework import viewsets
-from rest_framework import permissions
-from rest_framework import filters
+from rest_framework import filters, permissions, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.versioning import URLPathVersioning
-# from django_filters.rest_framework import DjangoFilterBackend
-from posts.models import Post, Group, Comment, Follow
-from .serializers import PostSerializer, GroupSerializer, CommentSerializer, FollowSerializer
-from .permissions import IsAuthorOrReadOnly, ReadOnly
+
+from posts.models import Comment, Follow, Group, Post
+
+from .permissions import IsAuthorOrReadOnly, IsUserOrForbidden
+from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
+                          PostSerializer)
 
 
 class FirstVersioning(URLPathVersioning):
@@ -16,6 +16,7 @@ class FirstVersioning(URLPathVersioning):
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    """ViewSet for model Post."""
     versioning_class = FirstVersioning
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -25,13 +26,9 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    # def get_permissions(self):
-    #     if self.action == 'retrieve':
-    #         return (ReadOnly(), )
-    #     return super().get_permissions()
-
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet for model Group."""
     versioning_class = FirstVersioning
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
@@ -39,8 +36,10 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """ViewSet for model Comment."""
     versioning_class = FirstVersioning
     serializer_class = CommentSerializer
+    permission_classes = (IsAuthorOrReadOnly,)
 
     def get_queryset(self):
         post_id = self.kwargs.get('post_id')
@@ -52,15 +51,16 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class FollowViewSet(viewsets.ModelViewSet):
+    """ViewSet for model Follow."""
     versioning_class = FirstVersioning
-    # queryset = Follow.objects.all()
     serializer_class = FollowSerializer
+    permission_classes = (IsUserOrForbidden,)
     filter_backends = (
-        # DjangoFilterBackend,
         filters.SearchFilter,
     )
-    # filterset_fields = ('following',)
-    search_fields = ('following')
+
+    # Поиск по '(ForeignKey текущей модели)__(имя поля в связанной модели)'
+    search_fields = ('following_id__username',)
 
     def get_queryset(self):
         user = self.request.user

@@ -1,33 +1,36 @@
-from email.mime import base
-from django.urls import path, include
+from django.urls import include, path
+
 from rest_framework import routers
-from .views import PostViewSet, GroupViewSet, CommentViewSet, FollowViewSet
+
+from .views import CommentViewSet, FollowViewSet, GroupViewSet, PostViewSet
 
 app_name = 'api'
 
 router_v1 = routers.DefaultRouter()
 router_v1.register(
     prefix=r'(?P<version>v1)/posts',
-    viewset=PostViewSet)
+    viewset=PostViewSet,
+)
 router_v1.register(
     prefix=r'(?P<version>v1)/groups',
-    viewset=GroupViewSet)
+    viewset=GroupViewSet,
+)
 router_v1.register(
     prefix=r'(?P<version>v1)/posts/(?P<post_id>\d+)/comments',
     viewset=CommentViewSet,
-    basename='comments')
+    basename='comments',
+)
 router_v1.register(
     prefix=r'(?P<version>v1)/follow',
     viewset=FollowViewSet,
-    basename='follow')
+    basename='follow',
+)
 
 urlpatterns = [
     path('', include(router_v1.urls)),
 ]
 
 urlpatterns += [
-    # базовые, для управления пользователями в Django:
     path('v1/', include('djoser.urls')),
-    # JWT-эндпоинты, для управления JWT-токенами:
     path('v1/', include('djoser.urls.jwt')),
 ]

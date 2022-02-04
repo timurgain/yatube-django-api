@@ -1,3 +1,6 @@
+static
+api_tm_tester.html
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -148,3 +151,4 @@ dmypy.json
 # папки со статикой и медиа
 media/
 yatube_api/posts/static/
+api_tm_tester.html

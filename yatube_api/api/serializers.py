@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from posts.models import Comment, Post, Group, Follow
+from posts.models import Comment, Follow, Group, Post, User
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """Serializer for model Post."""
     author = serializers.SlugRelatedField(
         slug_field='username', read_only=True,
         default=serializers.CurrentUserDefault(),
@@ -17,6 +18,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    """Serializer for model Comment."""
     author = serializers.SlugRelatedField(
         slug_field='username', read_only=True,
         default=serializers.CurrentUserDefault(),
@@ -28,7 +30,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
-
+    """Serializer for model Group."""
     class Meta:
         model = Group
         fields = ('id', 'title', 'slug', 'description')
@@ -36,9 +38,14 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
+    """Serializer for model Follow."""
     user = serializers.SlugRelatedField(
         slug_field='username', read_only=True,
         default=serializers.CurrentUserDefault(),
+    )
+    following = serializers.SlugRelatedField(
+        slug_field='username',
+        queryset=User.objects.all(),
     )
 
     class Meta:
@@ -49,6 +56,13 @@ class FollowSerializer(serializers.ModelSerializer):
             UniqueTogetherValidator(
                 queryset=Follow.objects.all(),
                 fields=['user', 'following'],
-                message='You are already following that author'
+                message='You are already following that author.',
             )
         ]
+
+    def validate(self, attrs):
+        request_user = self.context.get('request').user
+        following_user = attrs.get('following')
+        if request_user == following_user:
+            raise serializers.ValidationError("You can't follow yourself.")
+        return super().validate(attrs)
