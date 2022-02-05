@@ -289,34 +289,6 @@ Content-Length: 37
   "following": "teodor"
 }
 ```
-### Создать пользователя, модель User, аутентификация JWT
-запрос:
-```
-POST http://127.0.0.1:8000/api/v1/users/ HTTP/1.1
-Content-Type: application/json
-
-{
-    "username": "teodor",
-    "password": "example"
-}
-```
-ответ:
-```
-HTTP/1.1 201 Created
-Date: Fri, 04 Feb 2022 19:22:31 GMT
-Server: WSGIServer/0.2 CPython/3.7.12
-Content-Type: application/json
-Vary: Accept
-Allow: GET, POST, HEAD, OPTIONS
-X-Frame-Options: SAMEORIGIN
-Content-Length: 39
-
-{
-  "email": "",
-  "username": "teodor",
-  "id": 3
-}
-```
 ### Получить токен JWT, библиотека djoser
 запрос:
 ```

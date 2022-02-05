@@ -62,7 +62,7 @@ class FollowViewSet(viewsets.ModelViewSet):
     )
 
     # Поиск по '(ForeignKey текущей модели)__(имя поля в связанной модели)'
-    search_fields = ('following_id__username',)
+    search_fields = ('=following_id__username',)
 
     def get_queryset(self):
         user = self.request.user
